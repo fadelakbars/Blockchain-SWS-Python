@@ -33,14 +33,10 @@ class WaterQualityClient:
         except Exception as e:
             print(f"Error: {e}")
             print("Blockchain Data:")
-        for block in self.blockchain.chain:
-            print({
-                "index": block.index,
-                "timestamp": block.timestamp,
-                "data": block.data,
-                "prev_hash": block.prev_hash,
-                "hash": block.hash
-            })
+        for block in self.blockchain.get_all_blocks():
+            block.pop('_id', None)  # Hapus ObjectId dari output
+            print(block)
+
     
     def start(self, broker="localhost", port=1883):
         self.client.connect(broker, port, 60)

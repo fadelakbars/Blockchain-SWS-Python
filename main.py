@@ -1,9 +1,10 @@
 from src.blockchain.chain import Blockchain
 from src.network.mqtt_client import WaterQualityClient
 from config.settings import Settings
+from src.blockchain.chain import Blockchain
 
 def main():
-    blockchain = Blockchain(Settings.BLOCKCHAIN_DIFFICULTY)
+    blockchain = Blockchain()
     client = WaterQualityClient(blockchain)
     
     print("Starting Water Quality Blockchain...")
