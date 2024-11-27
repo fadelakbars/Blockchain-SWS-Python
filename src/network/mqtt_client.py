@@ -13,29 +13,23 @@ class WaterQualityClient:
         print(f"Connected to MQTT broker with code {rc}")
         client.subscribe("water/quality")
     
-    # def on_message(self, client, userdata, msg):
-    #     try:
-    #         data = json.loads(msg.payload.decode())
-    #         self.blockchain.add_block(data)
-    #         print(f"Added block with data: {data}")
-    #     except Exception as e:
-    #         print(f"Error: {e}")
-            
     def on_message(self, client, userdata, msg):
         try:
             raw_payload = msg.payload.decode()
-            print(f"Raw Payload Received: {raw_payload}")
             data = json.loads(raw_payload)
             self.blockchain.add_block(data)
             print(f"Added block with data: {data}")
+            
+            # Validasi blockchain setelah blok ditambahkan
+            if self.blockchain.is_chain_valid():
+                print("Blockchain is valid.")
+            else:
+                print("Blockchain is invalid!")
         except json.JSONDecodeError as e:
             print(f"JSON Decode Error: {e}")
         except Exception as e:
             print(f"Error: {e}")
-            print("Blockchain Data:")
-        for block in self.blockchain.get_all_blocks():
-            block.pop('_id', None)  # Hapus ObjectId dari output
-            print(block)
+
 
     
     def start(self, broker="localhost", port=1883):
