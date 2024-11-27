@@ -87,3 +87,15 @@ class Blockchain:
 
         print("Blockchain is valid.")
         return True
+
+    def query_blocks(self, filter_criteria):
+        """
+        Cari blok berdasarkan kriteria tertentu.
+
+        Args:
+            filter_criteria (dict): Kriteria pencarian (misalnya {"data.sensor": "pH"}).
+
+        Returns:
+            list: Daftar blok yang cocok dengan kriteria.
+        """
+        return list(self.db.find(filter_criteria))
