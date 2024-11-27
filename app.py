@@ -8,9 +8,12 @@ blockchain = Blockchain()
 def index():
     blocks = blockchain.get_all_blocks()
     
-    # Format ulang data
+    # Ambil hanya 7 block terakhir
+    latest_blocks = blocks[-7:]  # Mengambil 7 elemen terakhir dari list
+
+    # Format ulang data untuk tabel
     formatted_blocks = []
-    for block in blocks:
+    for block in latest_blocks:
         formatted_blocks.append({
             "index": block["index"],
             "timestamp": block["timestamp"],
